@@ -15,11 +15,14 @@
     <div class="scanlines" aria-hidden="true"></div>
 
     <div class="boot-sequence" data-boot aria-hidden="true">
-      <div class="boot-grid">
-        <span>PJS NODE 07</span>
-        <span>SCROLL ENGINE</span>
-        <span>SIGNAL FIELD READY</span>
-      </div>
+      <pre class="boot-ascii">
+PPPPPP   JJJJJJ   SSSSS
+PP   PP    JJ    SS
+PPPPPP     JJ     SSSS
+PP      JJ JJ        SS
+PP       JJJ     SSSSS
+      </pre>
+      <p>SCROLL ENGINE // AUTOMATION SIGNAL</p>
       <div class="boot-loader">
         <span></span>
       </div>
@@ -31,11 +34,7 @@
 
     <header class="site-header">
       <a class="brand" href="#top" aria-label="Retour accueil">
-        <span class="brand-mark">PJS</span>
-        <span class="brand-copy">
-          <span>Automation Foundry</span>
-          <span>Node 07 // France</span>
-        </span>
+        <span>PJS</span>
       </a>
 
       <nav class="main-nav" aria-label="Navigation principale">
@@ -45,7 +44,7 @@
         <a href="#contact">Contact</a>
       </nav>
 
-      <a class="header-cta" href="#contact">Demarrer</a>
+      <a class="header-cta" href="#contact">Contact</a>
     </header>
 
     <aside class="mission-nav" aria-label="Navigation immersive">
@@ -58,39 +57,32 @@
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-status">
-          <span>carrier wave locked</span>
-          <span>automation core online</span>
-          <span>human approval required</span>
-        </div>
-
         <div class="hero-grid">
           <div class="hero-copy">
-            <p class="kicker">Signal IA // Processus // Production</p>
-            <h1 id="hero-title">Des automatismes IA pour faire tourner vos operations sans friction.</h1>
+            <p class="kicker">Automation studio // IA operations</p>
+            <h1 id="hero-title">We build AI systems for teams that move fast.</h1>
             <p class="hero-lede">
-              PJS construit des systemes qui connectent vos outils, lisent vos donnees, declenchent les bonnes actions et gardent l'humain aux commandes.
+              PJS concoit des automatisations IA premium: des workflows connectes, des agents metier, des donnees propres et des operations qui avancent sans bruit.
             </p>
 
             <div class="hero-actions" aria-label="Actions principales">
-              <a class="btn primary" href="#contact">Cartographier un workflow</a>
-              <a class="btn ghost" href="#services">Scanner les services</a>
+              <a class="btn primary" href="#contact">Start a project</a>
+              <a class="btn ghost" href="#services">View services</a>
             </div>
           </div>
 
-          <aside class="reactor" aria-label="Reacteur visuel PJS">
-            <div class="reactor-stage" data-parallax>
-              <div class="reactor-grid"></div>
-              <div class="reactor-ring ring-outer"></div>
-              <div class="reactor-ring ring-mid"></div>
-              <div class="reactor-ring ring-inner"></div>
-              <div class="reactor-core"></div>
-              <span class="reactor-beam beam-a"></span>
-              <span class="reactor-beam beam-b"></span>
-              <span class="reactor-beam beam-c"></span>
-            </div>
-            <div class="reactor-readout">
-              <span>scroll-controlled interface</span>
+          <aside class="ascii-stage" aria-label="Signal visuel PJS" data-parallax>
+            <pre data-ascii-signal>
+000000000000000000000000
+000000000000000000000000
+00000000000PJS0000000000
+000000000AUTOMATION00000
+000000000000IA0000000000
+000000000000000000000000
+000000000000000000000000
+            </pre>
+            <div class="stage-readout">
+              <span>scroll</span>
               <span data-scroll-readout>00%</span>
             </div>
           </aside>
@@ -98,16 +90,16 @@
 
         <div class="machine-panel" aria-label="Indicateurs de performance">
           <div>
-            <span class="metric">-42%</span>
-            <span>temps administratif cible</span>
+            <span class="metric">01</span>
+            <span>Audit workflow</span>
           </div>
           <div>
-            <span class="metric">24/7</span>
-            <span>surveillance de flux</span>
+            <span class="metric">02</span>
+            <span>Build automation</span>
           </div>
           <div>
-            <span class="metric">0 copy</span>
-            <span>double saisie evitee</span>
+            <span class="metric">03</span>
+            <span>Scale operations</span>
           </div>
         </div>
       </section>
@@ -115,29 +107,29 @@
       <section id="services" class="section services scroll-chapter" aria-labelledby="services-title" data-chapter="01">
         <div class="section-heading">
           <p class="kicker">Services</p>
-          <h2 id="services-title">Transformer les taches repetees en lignes de production intelligentes.</h2>
+          <h2 id="services-title">Systems that feel invisible when they work.</h2>
         </div>
 
         <div class="service-grid">
           <article class="service-card" data-depth="1">
             <span class="index">01</span>
             <h3>Agents metier</h3>
-            <p>Assistants IA connectes a vos donnees pour qualifier, repondre, rediger, verifier et preparer les decisions.</p>
+            <p>Agents connectes a vos donnees pour qualifier, rediger, verifier et preparer les decisions.</p>
           </article>
           <article class="service-card" data-depth="2">
             <span class="index">02</span>
             <h3>Automatisation outils</h3>
-            <p>Connexions entre CRM, emails, tableurs, ERP, formulaires et plateformes internes pour supprimer les ruptures.</p>
+            <p>CRM, emails, tableurs, ERP et outils internes branches en workflows propres.</p>
           </article>
           <article class="service-card" data-depth="3">
             <span class="index">03</span>
             <h3>Analyse documentaire</h3>
-            <p>Extraction fiable depuis devis, factures, contrats, rapports ou tickets avec controle qualite et tracabilite.</p>
+            <p>Lecture de factures, contrats, rapports ou tickets avec controle et tracabilite.</p>
           </article>
           <article class="service-card" data-depth="4">
             <span class="index">04</span>
             <h3>Pilotage operationnel</h3>
-            <p>Tableaux de bord, alertes et routines qui detectent les anomalies avant qu'elles ne deviennent des urgences.</p>
+            <p>Alertes, tableaux de bord et routines pour detecter les anomalies avant l'urgence.</p>
           </article>
         </div>
       </section>
