@@ -20,6 +20,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -31,11 +32,23 @@ body {
     linear-gradient(135deg, #040706 0%, #08110f 46%, #0d1112 100%);
   color: var(--text);
   font-family: var(--font-sans);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body.booting {
   overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background:
+    conic-gradient(from 90deg at 50% 50%, transparent, rgba(97, 255, 225, 0.06), transparent 22%),
+    linear-gradient(115deg, transparent 0 38%, rgba(203, 255, 71, 0.045) 39% 41%, transparent 42% 100%);
+  transform: translate3d(0, calc(var(--scroll, 0) * -80px), 0) scale(1.08);
+  opacity: 0.8;
 }
 
 a {
@@ -100,6 +113,24 @@ textarea {
   animation-delay: 360ms;
 }
 
+.scroll-progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 90;
+  height: 2px;
+  background: rgba(232, 255, 247, 0.08);
+}
+
+.scroll-progress span {
+  display: block;
+  width: calc(var(--scroll, 0) * 100%);
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--acid), var(--rust));
+  box-shadow: 0 0 20px rgba(203, 255, 71, 0.8);
+}
+
 .boot-loader {
   position: absolute;
   left: 50%;
@@ -139,6 +170,7 @@ textarea {
   display: grid;
   gap: 0.8rem;
   transform: translateY(-50%);
+  contain: layout paint;
 }
 
 .mission-nav a {
@@ -360,7 +392,6 @@ h1 {
 }
 
 .terminal,
-.sentinel-dialogue,
 .deck-screen {
   position: relative;
   border: 1px solid var(--line);
@@ -369,7 +400,6 @@ h1 {
 }
 
 .terminal::before,
-.sentinel-dialogue::before,
 .deck-screen::before {
   content: "";
   position: absolute;
@@ -381,194 +411,141 @@ h1 {
   pointer-events: none;
 }
 
-.sentinel {
+.reactor {
   position: relative;
   display: grid;
   gap: 1rem;
-  align-self: center;
+  overflow: hidden;
 }
 
-.sentinel-shell {
+.reactor-stage {
+  --tilt: calc((var(--scroll, 0) - 0.18) * 18deg);
   position: relative;
-  min-height: 25rem;
+  min-height: 32rem;
   display: grid;
   place-items: center;
   border: 1px solid rgba(232, 255, 247, 0.12);
   background:
     linear-gradient(90deg, rgba(232, 255, 247, 0.06) 1px, transparent 1px),
     linear-gradient(rgba(232, 255, 247, 0.05) 1px, transparent 1px),
-    radial-gradient(circle, rgba(97, 255, 225, 0.12), rgba(5, 8, 7, 0.1) 68%);
-  background-size: 34px 34px, 34px 34px, 100% 100%;
+    radial-gradient(circle, rgba(97, 255, 225, 0.12), rgba(5, 8, 7, 0.1) 68%),
+    linear-gradient(135deg, rgba(203, 255, 71, 0.08), transparent 34%, rgba(255, 118, 72, 0.08));
+  background-size: 34px 34px, 34px 34px, 100% 100%, 100% 100%;
   overflow: hidden;
+  perspective: 900px;
+  max-width: 100%;
+  transform-origin: center;
+  transform: rotateX(var(--tilt)) rotateY(calc(var(--scroll, 0) * -10deg));
+  transform-style: preserve-3d;
 }
 
-.sentinel-shell::before,
-.sentinel-shell::after {
+.reactor-stage::before,
+.reactor-stage::after {
   content: "";
   position: absolute;
-  width: 70%;
+  width: 120%;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(203, 255, 71, 0.72), transparent);
   animation: scanPass 3.8s linear infinite;
 }
 
-.sentinel-shell::after {
+.reactor-stage::after {
   animation-delay: -1.9s;
 }
 
-.sentinel-antenna {
+.reactor-grid {
   position: absolute;
-  top: 13%;
-  width: 1px;
-  height: 4.6rem;
-  background: var(--line-hot);
-  box-shadow: 0 0 18px rgba(203, 255, 71, 0.55);
-}
-
-.sentinel-antenna::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: -0.35rem;
-  width: 0.72rem;
-  height: 0.72rem;
-  transform: translateX(-50%) rotate(45deg);
-  background: var(--acid);
-}
-
-.sentinel-head {
-  position: relative;
-  width: min(18rem, 78%);
-  aspect-ratio: 1.15;
-  clip-path: polygon(18% 0, 82% 0, 100% 27%, 91% 86%, 70% 100%, 30% 100%, 9% 86%, 0 27%);
-  border: 1px solid rgba(203, 255, 71, 0.38);
+  inset: 12%;
+  border: 1px solid rgba(232, 255, 247, 0.1);
   background:
-    radial-gradient(circle at 50% 38%, rgba(97, 255, 225, 0.22), transparent 24%),
-    linear-gradient(145deg, rgba(203, 255, 71, 0.22), rgba(8, 17, 16, 0.86) 44%, rgba(255, 118, 72, 0.12));
-  box-shadow: inset 0 0 46px rgba(0, 0, 0, 0.45), 0 0 60px rgba(97, 255, 225, 0.16);
-  animation: sentinelFloat 5s ease-in-out infinite;
+    repeating-linear-gradient(90deg, rgba(232, 255, 247, 0.08) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(0deg, rgba(232, 255, 247, 0.06) 0 1px, transparent 1px 28px);
+  transform: rotateX(62deg) translateZ(-80px);
+  animation: gridDrift 12s linear infinite;
 }
 
-.sentinel-eye {
-  position: absolute;
-  top: 36%;
-  width: 24%;
-  height: 0.78rem;
-  background: var(--cyan);
-  box-shadow: 0 0 24px var(--cyan);
-  animation: eyeWake 4.5s infinite;
-}
-
-.eye-left {
-  left: 18%;
-}
-
-.eye-right {
-  right: 18%;
-}
-
-.sentinel-mouth {
+.reactor-ring {
   position: absolute;
   left: 50%;
-  bottom: 24%;
-  display: flex;
-  gap: 0.32rem;
-  transform: translateX(-50%);
+  top: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(203, 255, 71, 0.38);
+  transform: translate(-50%, -50%) rotateX(68deg) rotateZ(calc(var(--scroll, 0) * 220deg));
+  box-shadow: 0 0 50px rgba(97, 255, 225, 0.12), inset 0 0 30px rgba(203, 255, 71, 0.08);
 }
 
-.sentinel-mouth span {
-  width: 0.36rem;
-  height: 1.4rem;
-  background: var(--acid);
-  box-shadow: 0 0 14px rgba(203, 255, 71, 0.58);
-  transform-origin: bottom;
-  animation: mouthIdle 850ms infinite ease-in-out;
+.ring-outer {
+  width: 82%;
+  aspect-ratio: 1;
+  border-style: dashed;
 }
 
-.sentinel.is-speaking .sentinel-mouth span {
-  animation: mouthTalk 260ms infinite ease-in-out;
+.ring-mid {
+  width: 56%;
+  aspect-ratio: 1;
+  border-color: rgba(97, 255, 225, 0.5);
+  transform: translate(-50%, -50%) rotateX(68deg) rotateZ(calc(var(--scroll, 0) * -280deg));
 }
 
-.sentinel-mouth span:nth-child(2) {
-  animation-delay: 80ms;
+.ring-inner {
+  width: 31%;
+  aspect-ratio: 1;
+  border-color: rgba(255, 118, 72, 0.65);
 }
 
-.sentinel-mouth span:nth-child(3) {
-  animation-delay: 160ms;
-}
-
-.sentinel-mouth span:nth-child(4) {
-  animation-delay: 240ms;
-}
-
-.sentinel-neck {
+.reactor-core {
   position: absolute;
-  bottom: 14%;
-  width: 7rem;
-  height: 2.3rem;
-  border: 1px solid rgba(232, 255, 247, 0.16);
-  border-top: 0;
-  background: rgba(5, 8, 7, 0.72);
+  left: 50%;
+  top: 50%;
+  width: clamp(5rem, 11vw, 9rem);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(calc(0.86 + var(--scroll, 0) * 0.32));
+  background:
+    radial-gradient(circle, var(--text) 0 8%, var(--acid) 9% 24%, rgba(97, 255, 225, 0.45) 25% 42%, transparent 68%);
+  filter: drop-shadow(0 0 35px rgba(203, 255, 71, 0.7));
+  animation: corePulse 2.8s ease-in-out infinite;
 }
 
-.sentinel-dialogue {
-  min-height: 10rem;
+.reactor-beam {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 80%;
+  background: linear-gradient(transparent, rgba(203, 255, 71, 0.76), transparent);
+  transform-origin: center;
+  opacity: 0.7;
 }
 
-.sentinel-dialogue p {
-  margin: 0;
-  min-height: 5.8rem;
-  padding: 1.1rem;
-  color: #d7fff4;
-  font-family: var(--font-mono);
-  font-size: 0.86rem;
-  line-height: 1.7;
+.beam-a {
+  transform: translate(-50%, -50%) rotate(32deg);
 }
 
-.voice-actions {
+.beam-b {
+  transform: translate(-50%, -50%) rotate(98deg);
+  background: linear-gradient(transparent, rgba(97, 255, 225, 0.72), transparent);
+}
+
+.beam-c {
+  transform: translate(-50%, -50%) rotate(153deg);
+  background: linear-gradient(transparent, rgba(255, 118, 72, 0.56), transparent);
+}
+
+.reactor-readout {
   display: flex;
-  gap: 0.5rem;
-  padding: 0 1rem 1rem;
-}
-
-.mini-btn {
-  flex: 1;
-  border: 1px solid rgba(232, 255, 247, 0.18);
-  background: rgba(97, 255, 225, 0.06);
-  color: var(--cyan);
-  padding: 0.7rem 0.8rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  text-align: center;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.mini-btn:hover {
-  border-color: var(--acid);
-  color: var(--acid);
-}
-
-.terminal-top {
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid rgba(232, 255, 247, 0.14);
+  background: rgba(8, 17, 16, 0.66);
   padding: 0.9rem 1rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.terminal-body {
-  padding: 1.15rem;
-  color: #b9d3cd;
+  color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 0.82rem;
-  line-height: 1.9;
+  font-size: 0.72rem;
+  text-transform: uppercase;
 }
 
-.terminal-body p {
-  margin-bottom: 0.15rem;
-}
-
-.terminal-pulse {
+.reactor-readout span:last-child {
   color: var(--acid);
-  animation: pulseText 1.5s infinite steps(2);
 }
 
 .command-deck {
@@ -743,6 +720,24 @@ h2 {
   transition: opacity 700ms ease, transform 700ms ease;
 }
 
+.scroll-chapter {
+  position: relative;
+}
+
+.scroll-chapter::before {
+  content: attr(data-chapter);
+  position: absolute;
+  right: clamp(1rem, 4vw, 3.5rem);
+  top: 2rem;
+  color: rgba(232, 255, 247, 0.08);
+  font-family: var(--font-mono);
+  font-size: clamp(4rem, 14vw, 12rem);
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  transform: translateY(calc(var(--chapter-shift, 0) * -90px));
+}
+
 .service-card.is-visible,
 .step.is-visible,
 .proof-item.is-visible,
@@ -752,6 +747,26 @@ h2 {
 .deck-controls.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.service-card[data-depth="1"] {
+  transform: translateY(calc(2rem - var(--scroll, 0) * 18px)) rotateX(calc(var(--scroll, 0) * 3deg));
+}
+
+.service-card[data-depth="2"] {
+  transform: translateY(calc(3.4rem - var(--scroll, 0) * 28px)) rotateX(calc(var(--scroll, 0) * 4deg));
+}
+
+.service-card[data-depth="3"] {
+  transform: translateY(calc(4.8rem - var(--scroll, 0) * 38px)) rotateX(calc(var(--scroll, 0) * 5deg));
+}
+
+.service-card[data-depth="4"] {
+  transform: translateY(calc(6.2rem - var(--scroll, 0) * 48px)) rotateX(calc(var(--scroll, 0) * 6deg));
+}
+
+.service-card.is-visible[data-depth] {
+  opacity: 1;
 }
 
 .service-card:last-child {
@@ -1000,32 +1015,15 @@ textarea {
   }
 }
 
-@keyframes sentinelFloat {
-  50% {
-    transform: translateY(-0.9rem);
+@keyframes gridDrift {
+  to {
+    background-position: 56px 56px, 56px 56px;
   }
 }
 
-@keyframes eyeWake {
-  0%,
-  8%,
-  100% {
-    transform: scaleY(1);
-  }
-  4% {
-    transform: scaleY(0.12);
-  }
-}
-
-@keyframes mouthIdle {
+@keyframes corePulse {
   50% {
-    transform: scaleY(0.44);
-  }
-}
-
-@keyframes mouthTalk {
-  50% {
-    transform: scaleY(0.18);
+    filter: drop-shadow(0 0 55px rgba(97, 255, 225, 0.85));
   }
 }
 
@@ -1132,12 +1130,8 @@ textarea {
     line-height: 0.94;
   }
 
-  .sentinel-shell {
-    min-height: 19rem;
-  }
-
-  .sentinel-dialogue p {
-    min-height: 7.5rem;
+  .reactor-stage {
+    min-height: 22rem;
   }
 }
 
