@@ -1,10 +1,33 @@
 const canvas = document.querySelector("#signal-field");
 const ctx = canvas.getContext("2d");
+const robotLine = document.querySelector("[data-robot-line]");
+const robotState = document.querySelector("[data-voice-state]");
+const robot = document.querySelector(".sentinel");
+const speakButton = document.querySelector("[data-speak]");
+const boot = document.querySelector("[data-boot]");
+const readout = document.querySelector("[data-readout]");
+const navDots = [...document.querySelectorAll("[data-nav-dot]")];
+const deckNodes = [...document.querySelectorAll(".deck-node")];
 
 let width = 0;
 let height = 0;
 let nodes = [];
 let pointer = { x: 0, y: 0, active: false };
+let typeTimer;
+
+const robotMessages = [
+  "Initialisation terminee. Je suis SENTINEL-07, interface vivante du noyau PJS.",
+  "Je detecte vos taches repetitives, vos ruptures d'outils et les zones ou l'IA peut reprendre la charge.",
+  "Navigation ouverte. Selectionnez un vecteur: services, architecture, use cases ou contact."
+];
+
+const sectionLabels = {
+  top: "route: main terminal",
+  services: "route: services",
+  systeme: "route: architecture",
+  preuves: "route: use cases",
+  contact: "route: contact"
+};
 
 function resize() {
   const ratio = Math.min(window.devicePixelRatio || 1, 2);
@@ -25,6 +48,109 @@ function resize() {
     pulse: Math.random() * Math.PI * 2,
     type: index % 5 === 0 ? "hot" : "cool"
   }));
+}
+
+function typeRobotLine(message, index = 0) {
+  clearTimeout(typeTimer);
+  if (!robotLine) return;
+
+  robot?.classList.add("is-speaking");
+  robotLine.textContent = message.slice(0, index);
+
+  if (index < message.length) {
+    typeTimer = setTimeout(() => typeRobotLine(message, index + 1), 24);
+    return;
+  }
+
+  setTimeout(() => robot?.classList.remove("is-speaking"), 620);
+}
+
+function runBootSequence() {
+  document.body.classList.add("booting");
+
+  setTimeout(() => {
+    boot?.classList.add("is-hidden");
+    document.body.classList.remove("booting");
+    robotState && (robotState.textContent = "online");
+    typeRobotLine(robotMessages[0]);
+  }, 1700);
+
+  setTimeout(() => typeRobotLine(robotMessages[1]), 4300);
+  setTimeout(() => typeRobotLine(robotMessages[2]), 7600);
+}
+
+function speakIntro() {
+  if (!("speechSynthesis" in window)) {
+    typeRobotLine("Module vocal indisponible dans ce navigateur. Le canal visuel reste actif.");
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(
+    "Sentinel zero seven en ligne. Je cartographie vos workflows et je transforme les operations repetitives en systemes automatises."
+  );
+  utterance.lang = "fr-FR";
+  utterance.rate = 0.92;
+  utterance.pitch = 0.72;
+
+  robotState && (robotState.textContent = "speaking");
+  robot?.classList.add("is-speaking");
+  utterance.onend = () => {
+    robotState && (robotState.textContent = "online");
+    robot?.classList.remove("is-speaking");
+  };
+  window.speechSynthesis.speak(utterance);
+}
+
+function setupScrollReveals() {
+  const revealTargets = document.querySelectorAll(
+    ".service-card, .step, .proof-item, .contact-form, .system-visual, .deck-screen, .deck-controls"
+  );
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+        }
+      });
+    },
+    { threshold: 0.18 }
+  );
+
+  revealTargets.forEach((target) => revealObserver.observe(target));
+}
+
+function setupSectionTracking() {
+  const sections = [
+    document.querySelector(".hero"),
+    document.querySelector("#services"),
+    document.querySelector("#systeme"),
+    document.querySelector("#preuves"),
+    document.querySelector("#contact")
+  ].filter(Boolean);
+
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const id = entry.target.id || "top";
+        const index = sections.indexOf(entry.target);
+        readout && (readout.textContent = sectionLabels[id] || "route: signal");
+
+        navDots.forEach((dot, dotIndex) => {
+          dot.classList.toggle("is-active", dotIndex === index);
+        });
+        deckNodes.forEach((node, nodeIndex) => {
+          node.classList.toggle("active", nodeIndex === index);
+        });
+      });
+    },
+    { rootMargin: "-38% 0px -48% 0px", threshold: 0.01 }
+  );
+
+  sections.forEach((section) => sectionObserver.observe(section));
 }
 
 function drawGrid(time) {
@@ -119,5 +245,10 @@ window.addEventListener("pointerleave", () => {
   pointer.active = false;
 });
 
+speakButton?.addEventListener("click", speakIntro);
+
 resize();
+runBootSequence();
+setupScrollReveals();
+setupSectionTracking();
 render();
