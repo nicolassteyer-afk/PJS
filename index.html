@@ -17,12 +17,16 @@
     <div class="boot-sequence" data-boot aria-hidden="true">
       <div class="boot-grid">
         <span>PJS NODE 07</span>
-        <span>WAKE PROTOCOL</span>
-        <span>VOICE BUS READY</span>
+        <span>SCROLL ENGINE</span>
+        <span>SIGNAL FIELD READY</span>
       </div>
       <div class="boot-loader">
         <span></span>
       </div>
+    </div>
+
+    <div class="scroll-progress" aria-hidden="true">
+      <span data-scroll-progress></span>
     </div>
 
     <header class="site-header">
@@ -74,32 +78,20 @@
             </div>
           </div>
 
-          <aside class="sentinel" aria-label="Assistant robotique PJS">
-            <div class="sentinel-shell">
-              <div class="sentinel-antenna"></div>
-              <div class="sentinel-head">
-                <div class="sentinel-eye eye-left"></div>
-                <div class="sentinel-eye eye-right"></div>
-                <div class="sentinel-mouth">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-              </div>
-              <div class="sentinel-neck"></div>
+          <aside class="reactor" aria-label="Reacteur visuel PJS">
+            <div class="reactor-stage" data-parallax>
+              <div class="reactor-grid"></div>
+              <div class="reactor-ring ring-outer"></div>
+              <div class="reactor-ring ring-mid"></div>
+              <div class="reactor-ring ring-inner"></div>
+              <div class="reactor-core"></div>
+              <span class="reactor-beam beam-a"></span>
+              <span class="reactor-beam beam-b"></span>
+              <span class="reactor-beam beam-c"></span>
             </div>
-
-            <div class="sentinel-dialogue">
-              <div class="terminal-top">
-                <span>sentinel/pjs-07</span>
-                <span data-voice-state>booting</span>
-              </div>
-              <p data-robot-line>Initialisation du noyau automation. Analyse de vos workflows en attente.</p>
-              <div class="voice-actions">
-                <button class="mini-btn" type="button" data-speak>Activer voix</button>
-                <a class="mini-btn" href="#services">Entrer</a>
-              </div>
+            <div class="reactor-readout">
+              <span>scroll-controlled interface</span>
+              <span data-scroll-readout>00%</span>
             </div>
           </aside>
         </div>
@@ -120,29 +112,29 @@
         </div>
       </section>
 
-      <section id="services" class="section services" aria-labelledby="services-title">
+      <section id="services" class="section services scroll-chapter" aria-labelledby="services-title" data-chapter="01">
         <div class="section-heading">
           <p class="kicker">Services</p>
           <h2 id="services-title">Transformer les taches repetees en lignes de production intelligentes.</h2>
         </div>
 
         <div class="service-grid">
-          <article class="service-card">
+          <article class="service-card" data-depth="1">
             <span class="index">01</span>
             <h3>Agents metier</h3>
             <p>Assistants IA connectes a vos donnees pour qualifier, repondre, rediger, verifier et preparer les decisions.</p>
           </article>
-          <article class="service-card">
+          <article class="service-card" data-depth="2">
             <span class="index">02</span>
             <h3>Automatisation outils</h3>
             <p>Connexions entre CRM, emails, tableurs, ERP, formulaires et plateformes internes pour supprimer les ruptures.</p>
           </article>
-          <article class="service-card">
+          <article class="service-card" data-depth="3">
             <span class="index">03</span>
             <h3>Analyse documentaire</h3>
             <p>Extraction fiable depuis devis, factures, contrats, rapports ou tickets avec controle qualite et tracabilite.</p>
           </article>
-          <article class="service-card">
+          <article class="service-card" data-depth="4">
             <span class="index">04</span>
             <h3>Pilotage operationnel</h3>
             <p>Tableaux de bord, alertes et routines qui detectent les anomalies avant qu'elles ne deviennent des urgences.</p>
@@ -150,7 +142,7 @@
         </div>
       </section>
 
-      <section class="command-deck" aria-label="Console de navigation PJS">
+      <section class="command-deck scroll-chapter" aria-label="Console de navigation PJS" data-chapter="02">
         <div class="deck-screen">
           <div class="deck-header">
             <span>Operator console</span>
@@ -174,7 +166,7 @@
         </div>
       </section>
 
-      <section id="systeme" class="section system" aria-labelledby="system-title">
+      <section id="systeme" class="section system scroll-chapter" aria-labelledby="system-title" data-chapter="03">
         <div class="system-visual" aria-hidden="true">
           <div class="core-ring ring-a"></div>
           <div class="core-ring ring-b"></div>
@@ -205,7 +197,7 @@
         </div>
       </section>
 
-      <section id="preuves" class="section proof" aria-labelledby="proof-title">
+      <section id="preuves" class="section proof scroll-chapter" aria-labelledby="proof-title" data-chapter="04">
         <div class="section-heading">
           <p class="kicker">Use cases</p>
           <h2 id="proof-title">Rythme dans le chaos. Ordre dans les flux.</h2>
@@ -237,7 +229,7 @@
         </div>
       </section>
 
-      <section id="contact" class="section contact" aria-labelledby="contact-title">
+      <section id="contact" class="section contact scroll-chapter" aria-labelledby="contact-title" data-chapter="05">
         <div>
           <p class="kicker">Contact</p>
           <h2 id="contact-title">Envoyez un signal. On cartographie le premier automate.</h2>
