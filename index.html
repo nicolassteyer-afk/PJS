@@ -14,6 +14,17 @@
     <canvas id="signal-field" aria-hidden="true"></canvas>
     <div class="scanlines" aria-hidden="true"></div>
 
+    <div class="boot-sequence" data-boot aria-hidden="true">
+      <div class="boot-grid">
+        <span>PJS NODE 07</span>
+        <span>WAKE PROTOCOL</span>
+        <span>VOICE BUS READY</span>
+      </div>
+      <div class="boot-loader">
+        <span></span>
+      </div>
+    </div>
+
     <header class="site-header">
       <a class="brand" href="#top" aria-label="Retour accueil">
         <span class="brand-mark">PJS</span>
@@ -32,6 +43,14 @@
 
       <a class="header-cta" href="#contact">Demarrer</a>
     </header>
+
+    <aside class="mission-nav" aria-label="Navigation immersive">
+      <a href="#top" data-nav-dot="01" aria-label="Accueil"></a>
+      <a href="#services" data-nav-dot="02" aria-label="Services"></a>
+      <a href="#systeme" data-nav-dot="03" aria-label="Architecture"></a>
+      <a href="#preuves" data-nav-dot="04" aria-label="Use cases"></a>
+      <a href="#contact" data-nav-dot="05" aria-label="Contact"></a>
+    </aside>
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
@@ -55,17 +74,32 @@
             </div>
           </div>
 
-          <aside class="terminal" aria-label="Etat du systeme PJS">
-            <div class="terminal-top">
-              <span>tty/pjs-07</span>
-              <span>session active</span>
+          <aside class="sentinel" aria-label="Assistant robotique PJS">
+            <div class="sentinel-shell">
+              <div class="sentinel-antenna"></div>
+              <div class="sentinel-head">
+                <div class="sentinel-eye eye-left"></div>
+                <div class="sentinel-eye eye-right"></div>
+                <div class="sentinel-mouth">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="sentinel-neck"></div>
             </div>
-            <div class="terminal-body">
-              <p>&gt; handshake crm .......... ok</p>
-              <p>&gt; extraction documents .... ok</p>
-              <p>&gt; agent planning .......... armed</p>
-              <p>&gt; human validation ........ waiting</p>
-              <p class="terminal-pulse">&gt; next action: isolate bottleneck</p>
+
+            <div class="sentinel-dialogue">
+              <div class="terminal-top">
+                <span>sentinel/pjs-07</span>
+                <span data-voice-state>booting</span>
+              </div>
+              <p data-robot-line>Initialisation du noyau automation. Analyse de vos workflows en attente.</p>
+              <div class="voice-actions">
+                <button class="mini-btn" type="button" data-speak>Activer voix</button>
+                <a class="mini-btn" href="#services">Entrer</a>
+              </div>
             </div>
           </aside>
         </div>
@@ -113,6 +147,30 @@
             <h3>Pilotage operationnel</h3>
             <p>Tableaux de bord, alertes et routines qui detectent les anomalies avant qu'elles ne deviennent des urgences.</p>
           </article>
+        </div>
+      </section>
+
+      <section class="command-deck" aria-label="Console de navigation PJS">
+        <div class="deck-screen">
+          <div class="deck-header">
+            <span>Operator console</span>
+            <span data-readout>route: services</span>
+          </div>
+          <div class="deck-map" aria-hidden="true">
+            <span class="deck-node active"></span>
+            <span class="deck-node"></span>
+            <span class="deck-node"></span>
+            <span class="deck-node"></span>
+            <span class="deck-node"></span>
+          </div>
+          <p>Choisissez un vecteur. Le site se pilote comme une chaine d'assemblage: diagnostic, branchement, automatisation, preuve, contact.</p>
+        </div>
+
+        <div class="deck-controls">
+          <a href="#services">Services</a>
+          <a href="#systeme">Architecture</a>
+          <a href="#preuves">Use cases</a>
+          <a href="#contact">Contact</a>
         </div>
       </section>
 
