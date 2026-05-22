@@ -1,25 +1,19 @@
 const canvas = document.querySelector("#signal-field");
 const ctx = canvas.getContext("2d");
-const robotLine = document.querySelector("[data-robot-line]");
-const robotState = document.querySelector("[data-voice-state]");
-const robot = document.querySelector(".sentinel");
-const speakButton = document.querySelector("[data-speak]");
 const boot = document.querySelector("[data-boot]");
 const readout = document.querySelector("[data-readout]");
 const navDots = [...document.querySelectorAll("[data-nav-dot]")];
 const deckNodes = [...document.querySelectorAll(".deck-node")];
+const progressBar = document.querySelector("[data-scroll-progress]");
+const scrollReadout = document.querySelector("[data-scroll-readout]");
+const chapters = [...document.querySelectorAll(".scroll-chapter")];
+const parallaxItems = [...document.querySelectorAll("[data-parallax]")];
 
 let width = 0;
 let height = 0;
 let nodes = [];
 let pointer = { x: 0, y: 0, active: false };
-let typeTimer;
-
-const robotMessages = [
-  "Initialisation terminee. Je suis SENTINEL-07, interface vivante du noyau PJS.",
-  "Je detecte vos taches repetitives, vos ruptures d'outils et les zones ou l'IA peut reprendre la charge.",
-  "Navigation ouverte. Selectionnez un vecteur: services, architecture, use cases ou contact."
-];
+let latestScroll = 0;
 
 const sectionLabels = {
   top: "route: main terminal",
@@ -50,56 +44,34 @@ function resize() {
   }));
 }
 
-function typeRobotLine(message, index = 0) {
-  clearTimeout(typeTimer);
-  if (!robotLine) return;
-
-  robot?.classList.add("is-speaking");
-  robotLine.textContent = message.slice(0, index);
-
-  if (index < message.length) {
-    typeTimer = setTimeout(() => typeRobotLine(message, index + 1), 24);
-    return;
-  }
-
-  setTimeout(() => robot?.classList.remove("is-speaking"), 620);
-}
-
 function runBootSequence() {
   document.body.classList.add("booting");
 
   setTimeout(() => {
     boot?.classList.add("is-hidden");
     document.body.classList.remove("booting");
-    robotState && (robotState.textContent = "online");
-    typeRobotLine(robotMessages[0]);
   }, 1700);
-
-  setTimeout(() => typeRobotLine(robotMessages[1]), 4300);
-  setTimeout(() => typeRobotLine(robotMessages[2]), 7600);
 }
 
-function speakIntro() {
-  if (!("speechSynthesis" in window)) {
-    typeRobotLine("Module vocal indisponible dans ce navigateur. Le canal visuel reste actif.");
-    return;
-  }
+function updateScrollInterface() {
+  const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+  const progress = Math.min(window.scrollY / scrollable, 1);
+  latestScroll = progress;
+  document.documentElement.style.setProperty("--scroll", progress.toFixed(4));
+  progressBar && (progressBar.style.width = `${progress * 100}%`);
+  scrollReadout && (scrollReadout.textContent = `${Math.round(progress * 100).toString().padStart(2, "0")}%`);
 
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(
-    "Sentinel zero seven en ligne. Je cartographie vos workflows et je transforme les operations repetitives en systemes automatises."
-  );
-  utterance.lang = "fr-FR";
-  utterance.rate = 0.92;
-  utterance.pitch = 0.72;
+  chapters.forEach((chapter) => {
+    const rect = chapter.getBoundingClientRect();
+    const local = 1 - Math.min(Math.max(rect.top / window.innerHeight, -1), 1);
+    chapter.style.setProperty("--chapter-shift", local.toFixed(3));
+  });
 
-  robotState && (robotState.textContent = "speaking");
-  robot?.classList.add("is-speaking");
-  utterance.onend = () => {
-    robotState && (robotState.textContent = "online");
-    robot?.classList.remove("is-speaking");
-  };
-  window.speechSynthesis.speak(utterance);
+  parallaxItems.forEach((item) => {
+    const rect = item.getBoundingClientRect();
+    const local = (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
+    item.style.setProperty("--local-scroll", local.toFixed(3));
+  });
 }
 
 function setupScrollReveals() {
@@ -159,7 +131,7 @@ function drawGrid(time) {
   ctx.strokeStyle = "rgba(145, 255, 218, 0.1)";
   ctx.lineWidth = 1;
 
-  const offset = (time * 0.012) % 44;
+  const offset = (time * 0.012 + latestScroll * 260) % 44;
   for (let x = -44 + offset; x < width + 44; x += 44) {
     ctx.beginPath();
     ctx.moveTo(x, 0);
@@ -244,11 +216,11 @@ window.addEventListener("pointermove", (event) => {
 window.addEventListener("pointerleave", () => {
   pointer.active = false;
 });
-
-speakButton?.addEventListener("click", speakIntro);
+window.addEventListener("scroll", updateScrollInterface, { passive: true });
 
 resize();
 runBootSequence();
 setupScrollReveals();
 setupSectionTracking();
+updateScrollInterface();
 render();
