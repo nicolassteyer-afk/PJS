@@ -15,6 +15,7 @@ body {
   color: var(--ink);
   font-family: var(--mono);
   overflow-x: hidden;
+  --scroll: 0;
 }
 
 #field {
@@ -48,6 +49,8 @@ a { color: inherit; }
   font-size: clamp(2rem, 7vw, 7rem);
   font-weight: 700;
   letter-spacing: 0.08em;
+  transform: translateY(calc(var(--scroll) * -10svh));
+  transition: transform 120ms linear;
 }
 
 .top-links {
@@ -60,12 +63,12 @@ a { color: inherit; }
 
 .meter {
   position: absolute;
-  top: 26svh;
+  top: 27svh;
   display: grid;
   gap: 0.25rem;
 }
-.meter-left { left: clamp(1rem, 8vw, 7rem); }
-.meter-right { right: clamp(1rem, 8vw, 7rem); text-align: right; }
+.meter-left { left: clamp(1rem, 6vw, 5.5rem); }
+.meter-right { right: clamp(1rem, 6vw, 5.5rem); text-align: right; }
 .meter span {
   color: var(--soft);
   font-size: 0.82rem;
@@ -73,22 +76,29 @@ a { color: inherit; }
 }
 .meter strong {
   font-family: var(--sans);
-  font-size: clamp(2.8rem, 8vw, 8rem);
+  font-size: clamp(2.6rem, 7vw, 6.8rem);
   line-height: 0.88;
   font-weight: 900;
+  display: block;
+  transform: translateY(calc(var(--scroll) * 4svh));
 }
 
 .name-block {
   align-self: center;
   text-align: center;
-  transform: translateY(3svh);
+  transform: translateY(8svh);
+}
+.name-block h1,
+.name-block p,
+.take {
+  transform: translateY(calc(var(--scroll) * -6svh));
 }
 .name-block h1 {
   margin: 0;
   font-family: var(--sans);
-  font-size: clamp(2.3rem, 7vw, 7.5rem);
+  font-size: clamp(2.25rem, 6.6vw, 6.9rem);
   line-height: 0.9;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.04em;
   font-weight: 900;
 }
 .name-block p,
