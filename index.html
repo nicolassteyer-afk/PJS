@@ -3,252 +3,95 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Services d'automatisation IA pour operations, donnees et workflows industriels.">
-    <title>PJS // Automatisation IA Industrielle</title>
+    <meta name="description" content="PJS cree des automatisations IA, agents metier et workflows operationnels.">
+    <title>PJS // AI Automation Systems</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <canvas id="signal-field" aria-hidden="true"></canvas>
-    <div class="scanlines" aria-hidden="true"></div>
+    <canvas id="field" aria-hidden="true"></canvas>
 
-    <div class="boot-sequence" data-boot aria-hidden="true">
-      <pre class="boot-ascii">
-PPPPPP   JJJJJJ   SSSSS
-PP   PP    JJ    SS
-PPPPPP     JJ     SSSS
-PP      JJ JJ        SS
-PP       JJJ     SSSSS
-      </pre>
-      <p>SCROLL ENGINE // AUTOMATION SIGNAL</p>
-      <div class="boot-loader">
-        <span></span>
-      </div>
-    </div>
-
-    <div class="scroll-progress" aria-hidden="true">
-      <span data-scroll-progress></span>
-    </div>
-
-    <header class="site-header">
-      <a class="brand" href="#top" aria-label="Retour accueil">
-        <span>PJS</span>
-      </a>
-
-      <nav class="main-nav" aria-label="Navigation principale">
-        <a href="#services">Services</a>
-        <a href="#systeme">Systeme</a>
-        <a href="#preuves">Preuves</a>
-        <a href="#contact">Contact</a>
+    <header class="nav">
+      <a href="#home" class="logo">PJS</a>
+      <nav aria-label="Navigation principale">
+        <a href="#home">Home</a>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
       </nav>
-
-      <a class="header-cta" href="#contact">Contact</a>
+      <a href="#contact">Contact</a>
     </header>
 
-    <aside class="mission-nav" aria-label="Navigation immersive">
-      <a href="#top" data-nav-dot="01" aria-label="Accueil"></a>
-      <a href="#services" data-nav-dot="02" aria-label="Services"></a>
-      <a href="#systeme" data-nav-dot="03" aria-label="Architecture"></a>
-      <a href="#preuves" data-nav-dot="04" aria-label="Use cases"></a>
-      <a href="#contact" data-nav-dot="05" aria-label="Contact"></a>
-    </aside>
+    <main id="home">
+      <section class="hero panel">
+        <p class="welcome" aria-label="Hi, Welcome">H i, W e l c o m e</p>
 
-    <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <p class="kicker">Automation studio // IA operations</p>
-            <h1 id="hero-title">We build AI systems for teams that move fast.</h1>
-            <p class="hero-lede">
-              PJS concoit des automatisations IA premium: des workflows connectes, des agents metier, des donnees propres et des operations qui avancent sans bruit.
-            </p>
-
-            <div class="hero-actions" aria-label="Actions principales">
-              <a class="btn primary" href="#contact">Start a project</a>
-              <a class="btn ghost" href="#services">View services</a>
-            </div>
-          </div>
-
-          <aside class="ascii-stage" aria-label="Signal visuel PJS" data-parallax>
-            <pre data-ascii-signal>
-000000000000000000000000
-000000000000000000000000
-00000000000PJS0000000000
-000000000AUTOMATION00000
-000000000000IA0000000000
-000000000000000000000000
-000000000000000000000000
-            </pre>
-            <div class="stage-readout">
-              <span>scroll</span>
-              <span data-scroll-readout>00%</span>
-            </div>
-          </aside>
-        </div>
-
-        <div class="machine-panel" aria-label="Indicateurs de performance">
+        <div class="status-grid">
           <div>
-            <span class="metric">01</span>
-            <span>Audit workflow</span>
+            <span>Faster</span>
+            <strong data-speed>11.0</strong>
           </div>
           <div>
-            <span class="metric">02</span>
-            <span>Build automation</span>
+            <span>Steady</span>
+            <strong>.?.:</strong>
           </div>
-          <div>
-            <span class="metric">03</span>
-            <span>Scale operations</span>
-          </div>
+        </div>
+
+        <div class="identity">
+          <p class="eyebrow">Automation // AI // Operations</p>
+          <h1>PJS</h1>
+          <p>AI Automation & Workflow Systems</p>
+        </div>
+
+        <div class="manifesto">
+          <p>Here's my take, whether it's building software or processes.</p>
+          <h2>Perceive. Design. Automate.</h2>
         </div>
       </section>
 
-      <section id="services" class="section services scroll-chapter" aria-labelledby="services-title" data-chapter="01">
-        <div class="section-heading">
-          <p class="kicker">Services</p>
-          <h2 id="services-title">Systems that feel invisible when they work.</h2>
-        </div>
-
-        <div class="service-grid">
-          <article class="service-card" data-depth="1">
-            <span class="index">01</span>
-            <h3>Agents metier</h3>
-            <p>Agents connectes a vos donnees pour qualifier, rediger, verifier et preparer les decisions.</p>
-          </article>
-          <article class="service-card" data-depth="2">
-            <span class="index">02</span>
-            <h3>Automatisation outils</h3>
-            <p>CRM, emails, tableurs, ERP et outils internes branches en workflows propres.</p>
-          </article>
-          <article class="service-card" data-depth="3">
-            <span class="index">03</span>
-            <h3>Analyse documentaire</h3>
-            <p>Lecture de factures, contrats, rapports ou tickets avec controle et tracabilite.</p>
-          </article>
-          <article class="service-card" data-depth="4">
-            <span class="index">04</span>
-            <h3>Pilotage operationnel</h3>
-            <p>Alertes, tableaux de bord et routines pour detecter les anomalies avant l'urgence.</p>
-          </article>
-        </div>
+      <section id="work" class="panel thought-stack">
+        <article>
+          <span>01</span>
+          <h2>Asking questions is important.</h2>
+          <p>Automating is not hard. Knowing what should be automated, when, and why is the real work.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h2>Reliability comes from clarity.</h2>
+          <p>We turn messy processes into explicit workflows: inputs, checks, triggers, ownership and exceptions.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h2>AI can code. But can it think for us?</h2>
+          <p>PJS keeps humans in the loop where judgement matters and lets agents handle the repetitive load.</p>
+        </article>
       </section>
 
-      <section class="command-deck scroll-chapter" aria-label="Console de navigation PJS" data-chapter="02">
-        <div class="deck-screen">
-          <div class="deck-header">
-            <span>Operator console</span>
-            <span data-readout>route: services</span>
-          </div>
-          <div class="deck-map" aria-hidden="true">
-            <span class="deck-node active"></span>
-            <span class="deck-node"></span>
-            <span class="deck-node"></span>
-            <span class="deck-node"></span>
-            <span class="deck-node"></span>
-          </div>
-          <p>Choisissez un vecteur. Le site se pilote comme une chaine d'assemblage: diagnostic, branchement, automatisation, preuve, contact.</p>
-        </div>
-
-        <div class="deck-controls">
-          <a href="#services">Services</a>
-          <a href="#systeme">Architecture</a>
-          <a href="#preuves">Use cases</a>
-          <a href="#contact">Contact</a>
-        </div>
-      </section>
-
-      <section id="systeme" class="section system scroll-chapter" aria-labelledby="system-title" data-chapter="03">
-        <div class="system-visual" aria-hidden="true">
-          <div class="core-ring ring-a"></div>
-          <div class="core-ring ring-b"></div>
-          <div class="core-ring ring-c"></div>
-          <div class="core-node"></div>
-          <span class="orbit orbit-a"></span>
-          <span class="orbit orbit-b"></span>
-          <span class="orbit orbit-c"></span>
-        </div>
-
-        <div class="system-copy">
-          <p class="kicker">Architecture</p>
-          <h2 id="system-title">Une chaine IA qui s'integre a votre terrain.</h2>
-          <div class="steps">
-            <div class="step">
-              <span>Detecter</span>
-              <p>On observe vos operations et on isole les points ou la machine peut aider sans brouiller la responsabilite humaine.</p>
-            </div>
-            <div class="step">
-              <span>Brancher</span>
-              <p>On connecte les sources utiles, du mail au CRM, avec des garde-fous clairs pour les donnees sensibles.</p>
-            </div>
-            <div class="step">
-              <span>Automatiser</span>
-              <p>On deploie des routines mesurables: traitement, controle, notification, enrichissement et reporting.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="preuves" class="section proof scroll-chapter" aria-labelledby="proof-title" data-chapter="04">
-        <div class="section-heading">
-          <p class="kicker">Use cases</p>
-          <h2 id="proof-title">Rythme dans le chaos. Ordre dans les flux.</h2>
-        </div>
-
-        <div class="ticker" aria-hidden="true">
-          <span>lead routing</span>
-          <span>ticket triage</span>
-          <span>invoice capture</span>
-          <span>contract check</span>
-          <span>email drafting</span>
-          <span>data cleaning</span>
-          <span>stock alerts</span>
-        </div>
-
-        <div class="proof-grid">
-          <div class="proof-item">
-            <span>Flux commercial</span>
-            <p>Qualification des demandes entrantes, enrichissement, priorisation et creation automatique des opportunites.</p>
-          </div>
-          <div class="proof-item">
-            <span>Back-office</span>
-            <p>Lecture de pieces jointes, rapprochement avec les donnees internes et preparation des actions a valider.</p>
-          </div>
-          <div class="proof-item">
-            <span>Support client</span>
-            <p>Detection d'intention, brouillons de reponse, synthese de contexte et escalade intelligente.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" class="section contact scroll-chapter" aria-labelledby="contact-title" data-chapter="05">
+      <section id="about" class="panel split">
         <div>
-          <p class="kicker">Contact</p>
-          <h2 id="contact-title">Envoyez un signal. On cartographie le premier automate.</h2>
+          <p class="eyebrow">Cause & Effect</p>
+          <h2>Workflows, code and processes that expect change.</h2>
         </div>
+        <div class="service-list">
+          <a href="#contact"><span>01</span> Agents metier</a>
+          <a href="#contact"><span>02</span> Automatisation outils</a>
+          <a href="#contact"><span>03</span> Analyse documentaire</a>
+          <a href="#contact"><span>04</span> Pilotage operationnel</a>
+        </div>
+      </section>
 
-        <form class="contact-form" action="mailto:contact@pjs-automation.fr" method="post" enctype="text/plain">
-          <label>
-            Nom
-            <input name="nom" autocomplete="name" required>
-          </label>
-          <label>
-            Email
-            <input name="email" type="email" autocomplete="email" required>
-          </label>
-          <label>
-            Workflow a automatiser
-            <textarea name="message" rows="5" placeholder="Ex: chaque matin nous recevons 40 demandes et devons..." required></textarea>
-          </label>
-          <button class="btn primary" type="submit">Transmettre le dossier</button>
+      <section id="contact" class="panel contact">
+        <p class="eyebrow">Sounds interesting?</p>
+        <h2>You be the perception, I'll be the tool.</h2>
+        <form action="mailto:contact@pjs-automation.fr" method="post" enctype="text/plain">
+          <label>Nom<input name="nom" autocomplete="name" required></label>
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <label>Workflow<textarea name="message" rows="5" placeholder="Ce que vous faites encore manuellement..." required></textarea></label>
+          <button type="submit">Let's connect..</button>
         </form>
       </section>
     </main>
-
-    <footer class="site-footer">
-      <span>PJS // Automation Foundry</span>
-      <span>Systeme concu pour services d'automatisation IA</span>
-    </footer>
 
     <script src="script.js"></script>
   </body>
