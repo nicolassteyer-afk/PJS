@@ -1,27 +1,12 @@
-const canvas = document.querySelector("#signal-field");
+const canvas = document.querySelector("#field");
 const ctx = canvas.getContext("2d");
-const boot = document.querySelector("[data-boot]");
-const readout = document.querySelector("[data-readout]");
-const navDots = [...document.querySelectorAll("[data-nav-dot]")];
-const deckNodes = [...document.querySelectorAll(".deck-node")];
-const progressBar = document.querySelector("[data-scroll-progress]");
-const scrollReadout = document.querySelector("[data-scroll-readout]");
-const chapters = [...document.querySelectorAll(".scroll-chapter")];
-const parallaxItems = [...document.querySelectorAll("[data-parallax]")];
+const speed = document.querySelector("[data-speed]");
+const revealItems = [...document.querySelectorAll(".thought-stack article")];
 
 let width = 0;
 let height = 0;
-let nodes = [];
-let pointer = { x: 0, y: 0, active: false };
-let latestScroll = 0;
-
-const sectionLabels = {
-  top: "route: main terminal",
-  services: "route: services",
-  systeme: "route: architecture",
-  preuves: "route: use cases",
-  contact: "route: contact"
-};
+let dots = [];
+let scrollValue = 0;
 
 function resize() {
   const ratio = Math.min(window.devicePixelRatio || 1, 2);
@@ -33,145 +18,55 @@ function resize() {
   canvas.style.height = `${height}px`;
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-  const count = Math.max(36, Math.floor((width * height) / 26000));
-  nodes = Array.from({ length: count }, (_, index) => ({
+  const count = Math.max(60, Math.floor((width * height) / 9000));
+  dots = Array.from({ length: count }, () => ({
     x: Math.random() * width,
     y: Math.random() * height,
-    vx: (Math.random() - 0.5) * 0.34,
-    vy: (Math.random() - 0.5) * 0.34,
-    pulse: Math.random() * Math.PI * 2,
-    type: index % 5 === 0 ? "hot" : "cool"
+    vx: (Math.random() - 0.5) * 0.35,
+    vy: (Math.random() - 0.5) * 0.35,
+    r: Math.random() * 2 + 1
   }));
 }
 
-function runBootSequence() {
-  document.body.classList.add("booting");
-
-  setTimeout(() => {
-    boot?.classList.add("is-hidden");
-    document.body.classList.remove("booting");
-  }, 1700);
+function updateScroll() {
+  const max = Math.max(document.documentElement.scrollHeight - innerHeight, 1);
+  scrollValue = scrollY / max;
+  if (speed) speed.textContent = (11 + scrollValue * 89).toFixed(1);
 }
 
-function updateScrollInterface() {
-  const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-  const progress = Math.min(window.scrollY / scrollable, 1);
-  latestScroll = progress;
-  document.documentElement.style.setProperty("--scroll", progress.toFixed(4));
-  progressBar && (progressBar.style.width = `${progress * 100}%`);
-  scrollReadout && (scrollReadout.textContent = `${Math.round(progress * 100).toString().padStart(2, "0")}%`);
-
-  chapters.forEach((chapter) => {
-    const rect = chapter.getBoundingClientRect();
-    const local = 1 - Math.min(Math.max(rect.top / window.innerHeight, -1), 1);
-    chapter.style.setProperty("--chapter-shift", local.toFixed(3));
-  });
-
-  parallaxItems.forEach((item) => {
-    const rect = item.getBoundingClientRect();
-    const local = (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
-    item.style.setProperty("--local-scroll", local.toFixed(3));
-  });
-}
-
-function setupScrollReveals() {
-  const revealTargets = document.querySelectorAll(
-    ".service-card, .step, .proof-item, .contact-form, .system-visual, .deck-screen, .deck-controls"
+function setupReveal() {
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(entry => entry.target.classList.toggle("is-visible", entry.isIntersecting)),
+    { threshold: 0.28 }
   );
-
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-        }
-      });
-    },
-    { threshold: 0.18 }
-  );
-
-  revealTargets.forEach((target) => revealObserver.observe(target));
+  revealItems.forEach(item => observer.observe(item));
 }
 
-function setupSectionTracking() {
-  const sections = [
-    document.querySelector(".hero"),
-    document.querySelector("#services"),
-    document.querySelector("#systeme"),
-    document.querySelector("#preuves"),
-    document.querySelector("#contact")
-  ].filter(Boolean);
+function draw() {
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = "rgba(20,20,20,.7)";
+  ctx.strokeStyle = "rgba(20,20,20,.12)";
 
-  const sectionObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
+  dots.forEach(dot => {
+    dot.x += dot.vx + scrollValue * 0.45;
+    dot.y += dot.vy;
+    if (dot.x < 0) dot.x = width;
+    if (dot.x > width) dot.x = 0;
+    if (dot.y < 0) dot.y = height;
+    if (dot.y > height) dot.y = 0;
 
-        const id = entry.target.id || "top";
-        const index = sections.indexOf(entry.target);
-        readout && (readout.textContent = sectionLabels[id] || "route: signal");
-
-        navDots.forEach((dot, dotIndex) => {
-          dot.classList.toggle("is-active", dotIndex === index);
-        });
-        deckNodes.forEach((node, nodeIndex) => {
-          node.classList.toggle("active", nodeIndex === index);
-        });
-      });
-    },
-    { rootMargin: "-38% 0px -48% 0px", threshold: 0.01 }
-  );
-
-  sections.forEach((section) => sectionObserver.observe(section));
-}
-
-function drawGrid(time) {
-  ctx.save();
-  ctx.globalAlpha = 0.35;
-  ctx.strokeStyle = "rgba(145, 255, 218, 0.1)";
-  ctx.lineWidth = 1;
-
-  const offset = (time * 0.012 + latestScroll * 260) % 44;
-  for (let x = -44 + offset; x < width + 44; x += 44) {
     ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x + width * 0.16, height);
-    ctx.stroke();
-  }
-
-  for (let y = -44 + offset; y < height + 44; y += 44) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(width, y - height * 0.08);
-    ctx.stroke();
-  }
-  ctx.restore();
-}
-
-function drawNodes(time) {
-  nodes.forEach((node) => {
-    node.x += node.vx;
-    node.y += node.vy;
-    node.pulse += 0.024;
-
-    if (node.x < -20) node.x = width + 20;
-    if (node.x > width + 20) node.x = -20;
-    if (node.y < -20) node.y = height + 20;
-    if (node.y > height + 20) node.y = -20;
+    ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+    ctx.fill();
   });
 
-  for (let i = 0; i < nodes.length; i += 1) {
-    for (let j = i + 1; j < nodes.length; j += 1) {
-      const a = nodes[i];
-      const b = nodes[j];
-      const dx = a.x - b.x;
-      const dy = a.y - b.y;
-      const distance = Math.hypot(dx, dy);
-
-      if (distance < 150) {
-        const alpha = (1 - distance / 150) * 0.34;
-        ctx.strokeStyle = `rgba(97, 255, 225, ${alpha})`;
-        ctx.lineWidth = 1;
+  for (let i = 0; i < dots.length; i++) {
+    for (let j = i + 1; j < dots.length; j++) {
+      const a = dots[i];
+      const b = dots[j];
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < 120) {
+        ctx.globalAlpha = 1 - d / 120;
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
@@ -179,48 +74,14 @@ function drawNodes(time) {
       }
     }
   }
-
-  if (pointer.active) {
-    nodes.forEach((node) => {
-      const distance = Math.hypot(node.x - pointer.x, node.y - pointer.y);
-      if (distance < 220) {
-        ctx.strokeStyle = `rgba(203, 255, 71, ${(1 - distance / 220) * 0.5})`;
-        ctx.beginPath();
-        ctx.moveTo(pointer.x, pointer.y);
-        ctx.lineTo(node.x, node.y);
-        ctx.stroke();
-      }
-    });
-  }
-
-  nodes.forEach((node) => {
-    const radius = 1.5 + Math.sin(node.pulse + time * 0.002) * 0.9;
-    ctx.fillStyle = node.type === "hot" ? "rgba(203, 255, 71, 0.88)" : "rgba(97, 255, 225, 0.7)";
-    ctx.beginPath();
-    ctx.rect(node.x - radius, node.y - radius, radius * 2, radius * 2);
-    ctx.fill();
-  });
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(draw);
 }
 
-function render(time = 0) {
-  ctx.clearRect(0, 0, width, height);
-  drawGrid(time);
-  drawNodes(time);
-  requestAnimationFrame(render);
-}
-
-window.addEventListener("resize", resize);
-window.addEventListener("pointermove", (event) => {
-  pointer = { x: event.clientX, y: event.clientY, active: true };
-});
-window.addEventListener("pointerleave", () => {
-  pointer.active = false;
-});
-window.addEventListener("scroll", updateScrollInterface, { passive: true });
+addEventListener("resize", resize);
+addEventListener("scroll", updateScroll, { passive: true });
 
 resize();
-runBootSequence();
-setupScrollReveals();
-setupSectionTracking();
-updateScrollInterface();
-render();
+updateScroll();
+setupReveal();
+draw();
