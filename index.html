@@ -13,83 +13,70 @@
   <body>
     <canvas id="field" aria-hidden="true"></canvas>
 
-    <header class="nav">
-      <a href="#home" class="logo">PJS</a>
-      <nav aria-label="Navigation principale">
-        <a href="#home">Home</a>
-        <a href="#work">Work</a>
-        <a href="#about">About</a>
-      </nav>
-      <a href="#contact">Contact</a>
-    </header>
+    <main class="page">
+      <section id="home" class="screen home-screen">
+        <p class="welcome">H i, W e l c o m e</p>
 
-    <main id="home">
-      <section class="hero panel">
-        <p class="welcome" aria-label="Hi, Welcome">H i, W e l c o m e</p>
+        <nav class="top-links" aria-label="Navigation principale">
+          <a href="#home">Home</a>
+          <a href="#work">Work</a>
+          <a href="#about">About</a>
+        </nav>
 
-        <div class="status-grid">
-          <div>
-            <span>Faster</span>
-            <strong data-speed>11.0</strong>
-          </div>
-          <div>
-            <span>Steady</span>
-            <strong>.?.:</strong>
-          </div>
+        <div class="meter meter-left">
+          <span>Faster</span>
+          <strong data-speed>11.0</strong>
         </div>
 
-        <div class="identity">
-          <p class="eyebrow">Automation // AI // Operations</p>
-          <h1>PJS</h1>
-          <p>AI Automation & Workflow Systems</p>
+        <div class="meter meter-right">
+          <span>Steady</span>
+          <strong>.?.:</strong>
         </div>
 
-        <div class="manifesto">
+        <div class="name-block">
+          <h1>PJS AUTOMATION</h1>
+          <p>AI | Automation | Workflow Engineer</p>
+        </div>
+
+        <div class="take">
           <p>Here's my take, whether it's building software or processes.</p>
           <h2>Perceive. Design. Automate.</h2>
         </div>
       </section>
 
-      <section id="work" class="panel thought-stack">
+      <section id="work" class="screen notes">
         <article>
-          <span>01</span>
-          <h2>Asking questions is important.</h2>
-          <p>Automating is not hard. Knowing what should be automated, when, and why is the real work.</p>
+          <h2>Asking questions is important!</h2>
+          <p>Building automation isn't hard, knowing what and how to automate is.</p>
         </article>
         <article>
-          <span>02</span>
-          <h2>Reliability comes from clarity.</h2>
-          <p>We turn messy processes into explicit workflows: inputs, checks, triggers, ownership and exceptions.</p>
+          <h2>Reliability comes from consistency.</h2>
+          <p>Consistency comes from clarity: inputs, owners, triggers, edge cases.</p>
         </article>
         <article>
-          <span>03</span>
-          <h2>AI can code. But can it think for us?</h2>
-          <p>PJS keeps humans in the loop where judgement matters and lets agents handle the repetitive load.</p>
+          <h2>Yes AI can code and refactor.</h2>
+          <p>But can it think for us? The system should support judgement, not replace it.</p>
+        </article>
+        <article>
+          <h2>Do we need code..? or solutions?</h2>
+          <p>Sometimes the best automation is a cleaner process before it becomes software.</p>
         </article>
       </section>
 
-      <section id="about" class="panel split">
-        <div>
-          <p class="eyebrow">Cause & Effect</p>
-          <h2>Workflows, code and processes that expect change.</h2>
-        </div>
-        <div class="service-list">
-          <a href="#contact"><span>01</span> Agents metier</a>
-          <a href="#contact"><span>02</span> Automatisation outils</a>
-          <a href="#contact"><span>03</span> Analyse documentaire</a>
-          <a href="#contact"><span>04</span> Pilotage operationnel</a>
+      <section id="about" class="screen cause">
+        <p>Cause & Effect</p>
+        <h2>Building workflows, agents and processes that expect change.</h2>
+        <div class="mini-services">
+          <span>Agents metier</span>
+          <span>Automatisation outils</span>
+          <span>Analyse documentaire</span>
+          <span>Pilotage operationnel</span>
         </div>
       </section>
 
-      <section id="contact" class="panel contact">
-        <p class="eyebrow">Sounds interesting?</p>
+      <section id="contact" class="screen contact">
+        <p>Sounds Interesting? <a href="mailto:contact@pjs-automation.fr">Let's connect..</a></p>
         <h2>You be the perception, I'll be the tool.</h2>
-        <form action="mailto:contact@pjs-automation.fr" method="post" enctype="text/plain">
-          <label>Nom<input name="nom" autocomplete="name" required></label>
-          <label>Email<input name="email" type="email" autocomplete="email" required></label>
-          <label>Workflow<textarea name="message" rows="5" placeholder="Ce que vous faites encore manuellement..." required></textarea></label>
-          <button type="submit">Let's connect..</button>
-        </form>
       </section>
     </main>
 
