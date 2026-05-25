@@ -1,7 +1,7 @@
 const canvas = document.querySelector("#field");
 const ctx = canvas.getContext("2d");
 const speed = document.querySelector("[data-speed]");
-const revealItems = [...document.querySelectorAll(".thought-stack article")];
+const revealItems = [...document.querySelectorAll(".notes article")];
 
 let width = 0;
 let height = 0;
@@ -31,6 +31,7 @@ function resize() {
 function updateScroll() {
   const max = Math.max(document.documentElement.scrollHeight - innerHeight, 1);
   scrollValue = scrollY / max;
+  document.body.style.setProperty("--scroll", scrollValue.toFixed(3));
   if (speed) speed.textContent = (11 + scrollValue * 89).toFixed(1);
 }
 
