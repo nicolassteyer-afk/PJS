@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
+type CursorContent = {
+  label: string;
+  title: string;
+  text: string;
+};
+
 export default function Cursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const [label, setLabel] = useState("");
+  const [content, setContent] = useState<CursorContent>({ label: "", title: "", text: "" });
 
   useEffect(() => {
     const dot = dotRef.current;
@@ -25,12 +31,16 @@ export default function Cursor() {
 
     const enter = (event: Event) => {
       const target = event.currentTarget as HTMLElement;
-      setLabel(target.dataset.cursor || "open");
+      setContent({
+        label: target.dataset.cursor || "open",
+        title: target.dataset.cursorTitle || "Signal",
+        text: target.dataset.cursorText || "Ouvre une nouvelle couche de l'experience.",
+      });
       document.body.classList.add("cursor-active");
     };
 
     const leave = () => {
-      setLabel("");
+      setContent({ label: "", title: "", text: "" });
       document.body.classList.remove("cursor-active");
     };
 
@@ -52,7 +62,11 @@ export default function Cursor() {
 
   return (
     <>
-      <div ref={ringRef} className="cursor-ring" aria-hidden="true"><span>{label}</span></div>
+      <div ref={ringRef} className="cursor-ring" aria-hidden="true">
+        <span className="cursor-label">{content.label}</span>
+        <strong>{content.title}</strong>
+        <small>{content.text}</small>
+      </div>
       <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
     </>
   );
