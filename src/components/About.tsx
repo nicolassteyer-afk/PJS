@@ -16,7 +16,8 @@ export default function About() {
           <div><dt>Motion</dt><dd>ScrollTrigger / timelines / parallax</dd></div>
           <div><dt>Output</dt><dd>Premium websites / product interfaces</dd></div>
         </dl>
-        <a className="about-button" href="#contact" data-cursor="contact"><span>contact</span></a>
+        <div className="about-pulse-copy" data-text-stream aria-hidden="true"><span>motion as orientation</span><span>typography as interface</span><span>systems as atmosphere</span></div>
+        <a className="about-button" href="#contact" data-cursor="contact" data-cursor-title="Contact" data-cursor-text="Passer de l'experience visuelle a une vraie collaboration."><span>contact</span></a>
       </div>
     </section>
   );
