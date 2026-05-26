@@ -45,6 +45,17 @@ export default function App() {
           },
         });
       });
+
+      gsap.utils.toArray<HTMLElement>("[data-text-stream]").forEach((stream) => {
+        gsap.fromTo(stream.querySelectorAll("span"), { xPercent: 24, opacity: 0.08, filter: "blur(8px)" }, {
+          xPercent: -18,
+          opacity: 0.72,
+          filter: "blur(0px)",
+          stagger: 0.08,
+          ease: "none",
+          scrollTrigger: { trigger: stream, start: "top bottom", end: "bottom top", scrub: 1.6 },
+        });
+      });
     }, appRef);
 
     return () => ctx.revert();
