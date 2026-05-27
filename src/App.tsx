@@ -10,6 +10,8 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import GridOverlay from "./components/GridOverlay";
 import NoiseOverlay from "./components/NoiseOverlay";
+import EditorialRail from "./components/EditorialRail";
+import FloatingNav from "./components/FloatingNav";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,12 +39,7 @@ export default function App() {
         gsap.to(element, {
           yPercent: Number(element.dataset.parallax || -16),
           ease: "none",
-          scrollTrigger: {
-            trigger: element.closest("section") || element,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2,
-          },
+          scrollTrigger: { trigger: element.closest("section") || element, start: "top bottom", end: "bottom top", scrub: 1.2 },
         });
       });
 
@@ -65,6 +62,8 @@ export default function App() {
     <div ref={appRef} className="site-shell">
       <GridOverlay />
       <NoiseOverlay />
+      <EditorialRail />
+      <FloatingNav />
       <Cursor />
       <Loader />
       <Hero />
