@@ -52,6 +52,186 @@
   }
 }
 
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: calc(var(--page-progress, 0) * 100%);
+  height: 0.35rem;
+  background: linear-gradient(90deg, var(--cyan), var(--violet-light));
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.35);
+  pointer-events: none;
+}
+
+.editorial-rail {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 40;
+  width: clamp(3.8rem, 6.8vw, 7.4rem);
+  border-right: 1px solid var(--grid-line);
+  background: rgba(7, 11, 24, 0.58);
+  backdrop-filter: blur(18px);
+  overflow: hidden;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 1rem;
+  padding-top: 0.6rem;
+  mix-blend-mode: screen;
+}
+
+.rail-year,
+.rail-marker {
+  background: var(--cyan);
+  color: var(--bg-dark);
+  padding: 0.25rem 0.35rem;
+  font-family: var(--mono);
+  font-weight: 900;
+  writing-mode: vertical-rl;
+}
+
+.rail-barcode {
+  width: 4.8rem;
+  height: 0.72rem;
+  background: repeating-linear-gradient(90deg, var(--text-main) 0 2px, transparent 2px 5px, var(--cyan) 5px 6px, transparent 6px 9px);
+}
+
+.rail-tiny,
+.editorial-rail strong,
+.rail-ghost {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  margin: 0;
+}
+
+.rail-tiny {
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+}
+
+.editorial-rail strong {
+  color: rgba(245, 247, 255, 0.66);
+  font-size: clamp(2.8rem, 6.8vw, 7rem);
+  line-height: 0.8;
+  letter-spacing: 0;
+}
+
+.rail-ghost {
+  position: absolute;
+  top: 0;
+  left: 43%;
+  height: 100vh;
+  color: rgba(124, 58, 237, 0.16);
+  font-size: clamp(2rem, 4.8vw, 6rem);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.rail-ghost.alt {
+  left: 8%;
+  top: 12vh;
+  color: rgba(34, 211, 238, 0.12);
+}
+
+.floating-nav {
+  position: fixed;
+  right: clamp(1rem, 5vw, 4rem);
+  bottom: clamp(1.2rem, 8vh, 5rem);
+  z-index: 55;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-main);
+  font-family: var(--mono);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  mix-blend-mode: screen;
+}
+
+.floating-nav i {
+  width: 5rem;
+  aspect-ratio: 1;
+  border: 1px solid rgba(34, 211, 238, 0.7);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 28px rgba(34, 211, 238, 0.16);
+}
+
+.floating-nav i::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 38%;
+  width: 5.2rem;
+  height: 1px;
+  background: var(--cyan);
+}
+
+.floating-nav i::after {
+  content: "\2192";
+  position: absolute;
+  top: 34%;
+  left: 114%;
+  color: var(--cyan);
+}
+
+.side-nav {
+  left: clamp(4.8rem, 8vw, 8.2rem);
+}
+
+.hero-ruler,
+.works-ruler {
+  position: sticky;
+  top: 18vh;
+  margin: 2rem 7vw 0 auto;
+  width: min(42rem, 48vw);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-ruler i,
+.works-ruler i {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--violet-light), var(--cyan));
+}
+
+.hero-specimen {
+  position: sticky;
+  top: 88vh;
+  margin-left: 38vw;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: max-content;
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-specimen b {
+  color: var(--cyan);
+  font-size: 1.6rem;
+}
+
+.works-ruler {
+  position: relative;
+  top: auto;
+  width: auto;
+  margin: 0 clamp(1rem, 5vw, 5rem) 2rem;
+}
+
 .hero-text-stream,
 .about-pulse-copy {
   position: sticky;
@@ -96,5 +276,34 @@
   .hero-text-stream {
     margin-left: 0;
     font-size: clamp(2.8rem, 13vw, 5rem);
+  }
+
+  .editorial-rail {
+    width: 2.8rem;
+  }
+
+  .editorial-rail strong,
+  .rail-ghost,
+  .rail-tiny {
+    display: none;
+  }
+
+  .floating-nav {
+    right: 1rem;
+    bottom: 1rem;
+    transform: scale(0.82);
+    transform-origin: right bottom;
+  }
+
+  .side-nav {
+    left: 3.2rem;
+  }
+
+  .hero-ruler,
+  .works-ruler,
+  .hero-specimen {
+    width: auto;
+    margin-left: 3rem;
+    margin-right: 1rem;
   }
 }
