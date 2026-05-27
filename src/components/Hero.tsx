@@ -30,9 +30,11 @@ export default function Hero() {
       </aside>
       <div className="hero-coordinate">N48.856 / E002.352 / build 2026</div>
       <div className="hero-year">(2026)</div>
+      <div className="hero-ruler" aria-hidden="true"><span>(alpha)</span><i /><span>(omega)</span></div>
       <div className="hero-marquee"><span>DIGITAL</span><em>MOTION</em><span className="hero-stroke">SYSTEM</span></div>
       <div className="hero-outline" aria-hidden="true">INTERFACE</div>
       <div className="hero-text-stream" data-text-stream aria-hidden="true"><span>discover the system</span><span>follow the signal</span><span>decode the interface</span></div>
+      <div className="hero-specimen" aria-hidden="true"><b>001</b><span>scroll depth / visual signal / editorial motion</span></div>
       <div className="hero-meta" data-parallax="-10"><p>+Independent Systems</p><p>+Creative Automation</p><p>+Motion Interface</p><p>+Digital Architecture</p></div>
       <a className="hero-action" href="#panels" data-cursor="scroll" data-cursor-title="Explore" data-cursor-text="Declenche la prochaine couche: panneaux, rythme lateral et details systeme."><span>explore</span><i /></a>
       <div className="hero-orbit" aria-hidden="true"><span /><span /></div>
