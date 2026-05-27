@@ -10,6 +10,7 @@ export default function Works() {
   return (
     <section className="works-section" id="works">
       <div className="section-header"><p>selected experiments</p><h2 data-reveal>WORKS</h2></div>
+      <div className="works-ruler" aria-hidden="true"><span>index / archive / fictional works</span><i /><span>scroll to inspect</span></div>
       <div className="works-list">
         {works.map(([num, year, category, title, description, summary]) => (
           <article className="work-card" key={title} data-cursor="view" data-cursor-title={title} data-cursor-text={summary}>
